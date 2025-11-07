@@ -40,26 +40,19 @@ namespace TH_Lab01.Controllers
         {
             if (ImageFile != null && ImageFile.Length > 0)
             {
-                // Lấy đường dẫn gốc của thư mục public (wwwroot)
                 string wwwRootPath = _webHostEnvironment.WebRootPath;
 
-                // Định nghĩa thư mục con để lưu ảnh sinh viên
                 string uploadPath = Path.Combine(wwwRootPath, "images", "student");
 
-                // Đảm bảo thư mục tồn tại
                 if (!Directory.Exists(uploadPath))
                 {
                     Directory.CreateDirectory(uploadPath);
                 }
 
-                // Tạo tên file duy nhất (dùng GUID) và giữ lại phần mở rộng (.jpg, .png)
                 string fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
                 string filePath = Path.Combine(uploadPath, fileName);
 
-                // Lưu đường dẫn công khai (Public URL Path) vào Model
                 s.ImagePath = "/images/student/" + fileName;
-
-                // Copy file vào thư mục đích trên server
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     ImageFile.CopyTo(fileStream);

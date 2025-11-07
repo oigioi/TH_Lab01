@@ -1,10 +1,9 @@
-﻿/* Custom CSS đơn giản cho Layout */
-#layoutSidenav {
+﻿#layoutSidenav {
     display: flex;
 }
 
     #layoutSidenav #layoutSidenav_nav {
-        flex-basis: 225px; /* Chiều rộng SideNav */
+        flex-basis: 225px; 
         flex-shrink: 0;
     }
 
@@ -20,9 +19,9 @@
 }
 
 .sb-sidenav-dark {
-    background-color: #212529; /* Màu nền Dark */
+    background-color: #212529;
 }
-/* Đảm bảo Main Content luôn chiếm hết chiều cao */
+
 #layoutSidenav_content {
     display: flex;
     flex-direction: column;
@@ -30,36 +29,34 @@
 }
 
 main {
-    flex: 1 0 auto; /* Main content sẽ chiếm phần còn lại */
+    flex: 1 0 auto; 
 }
-/* Thêm style để các nav-link hiển thị đúng dạng cột dọc */
 
 .nav {
-    display: flex; /* Bật Flexbox cho container menu */
-    flex-direction: column; /* Quan trọng: Xếp các mục menu theo cột dọc */
+    display: flex; 
+    flex-direction: column; 
     padding-left: 0;
     margin-bottom: 0;
     list-style: none;
 }
 
 .nav-link {
-    display: block; /* Đảm bảo nav-link chiếm toàn bộ chiều rộng */
-    padding: 0.75rem 1rem; /* Tạo khoảng cách cho mục menu */
-    color: rgba(255, 255, 255, 0.65); /* Màu chữ mặc định */
-    text-decoration: none; /* Loại bỏ gạch chân mặc định */
+    display: block; 
+    padding: 0.75rem 1rem;
+    color: rgba(255, 255, 255, 0.65); 
+    text-decoration: none; 
 }
 
     .nav-link:hover {
-        rgba(255, 255, 255, 1); /* Thay đổi màu khi di chuột */    }
+        rgba(255, 255, 255, 1);   }
 
-/* Kiểu dáng cho phần heading trong menu */
 .sb-sidenav-menu-heading {
-    /* (Code này bạn đã có, đảm bảo nó nằm ở vị trí đúng) */
+
     padding: 1.5rem 1rem 0.75rem 1rem;
     font-size: 0.85rem;
     color: rgba(255, 255, 255, 0.5);
 }
 .nav-link.active {
-    /* 3. Đặt màu cho mục đang active */
-    color: #4CAF50; /* Ví dụ: Màu xanh lá cây */
+
+    color: #4CAF50;
 }
