@@ -3,6 +3,7 @@ using TH_Lab01.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace TH_Lab01.Controllers
 {
@@ -38,29 +39,41 @@ namespace TH_Lab01.Controllers
         [HttpPost]
         public IActionResult Create(Student s,IFormFile? ImageFile)
         {
-            if (ImageFile != null && ImageFile.Length > 0)
+            if (ModelState.IsValid)
             {
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
-
-                string uploadPath = Path.Combine(wwwRootPath, "images", "student");
-
-                if (!Directory.Exists(uploadPath))
+                if (ImageFile != null && ImageFile.Length > 0)
                 {
-                    Directory.CreateDirectory(uploadPath);
-                }
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
 
-                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
-                string filePath = Path.Combine(uploadPath, fileName);
+                    string uploadPath = Path.Combine(wwwRootPath, "images", "student");
 
-                s.ImagePath = "/images/student/" + fileName;
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    ImageFile.CopyTo(fileStream);
+                    if (!Directory.Exists(uploadPath))
+                    {
+                        Directory.CreateDirectory(uploadPath);
+                    }
+
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageFile.FileName);
+                    string filePath = Path.Combine(uploadPath, fileName);
+
+                    s.ImagePath = "/images/student/" + fileName;
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        ImageFile.CopyTo(fileStream);
+                    }
                 }
+                s.Id = listStudents.LastOrDefault() != null ? listStudents.Last().Id + 1 : 101;
+                listStudents.Add(s);
+                return View("Index", listStudents);
             }
-            s.Id = listStudents.LastOrDefault() != null ? listStudents.Last().Id + 1 : 101;
-            listStudents.Add(s);
-            return View("Index", listStudents);
+            ViewBag.AllGenders = Enum.GetValues(typeof(Gender)).Cast<Gender>().ToList();
+            ViewBag.AllBranches = new List<SelectListItem>()
+            {
+                new SelectListItem{ Text="IT",Value="1"},
+                new SelectListItem{ Text="BE",Value="2"},
+                new SelectListItem{ Text="CE",Value="3"},
+                new SelectListItem{ Text="EE",Value="4"}
+            };
+            return View();
         }
     }
 }
